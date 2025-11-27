@@ -8,7 +8,7 @@ This project creates and analyzes Bell states with phase encoding using Qiskit. 
 - Applies phase encoding with variable angle φ
 - Measures in both Z-basis and X-basis (X⊗X)
 - Compares experimental results against theoretical predictions
-- Runs on both Qiskit simulator and IBM Quantum hardware
+- Runs on both Qiskit simulator
 - Estimates phase from measurement probabilities
 
 ## How to run
