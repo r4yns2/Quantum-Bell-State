@@ -1,15 +1,15 @@
-import math, numpy as np
+import math, numpy as np, json, os
 import matplotlib.pyplot as plt
 
 # --- theory for X⊗X on |Φ_φ> ---
 def theory_probs_xx(phi):
     c = math.cos(phi)
     return {
-        "00": (1+c)/4, 
-        "11": (1+c)/4, 
-        "01": (1-c)/4, 
+        "00": (1+c)/4,
+        "11": (1+c)/4,
+        "01": (1-c)/4,
         "10": (1-c)/4
-        }
+    }
 
 def counts_to_probs(counts):
     shots = sum(counts.values()) or 1
@@ -22,15 +22,28 @@ def stderr_binom(p_hat, shots):
 def reverse_keys(d):  # flip bitstring order if needed
     return {k[::-1]: v for k, v in d.items()}
 
-# === EDIT THESE ===
-phi_points = [0.0, math.pi/2, math.pi]
+# === NEW: load JSON counts automatically ===
+DATA_DIR = "data/raw/x_basis"
 
-# Paste Composer counts (X-basis runs: H on both before measure)
-composer_counts = [
-    {"00": 504, "11": 495},                               # φ=0
-    {"00": 233, "01": 248, "10": 271, "11": 247},         # φ=π/2
-    {"01": 495, "10": 504},                               # φ=π
-]
+phi_points = []
+composer_counts = []
+
+for fname in sorted(os.listdir(DATA_DIR)):
+    if not fname.endswith(".json"):
+        continue
+    path = os.path.join(DATA_DIR, fname)
+
+    with open(path, "r") as f:
+        raw = json.load(f)
+
+    # Your JSON format:
+    # { "phi": float, "counts": {...} }
+    phi = float(raw["phi"])
+    counts = raw["counts"]
+
+    phi_points.append(phi)
+    composer_counts.append(counts)
+
 BITSTRINGS_REVERSED = False
 # ==================
 
@@ -49,7 +62,6 @@ for outcome in ["00", "01", "10", "11"]:
 
 # 2) Composer points with error bars + small jitter to separate pairs
 markers = {"00":"o", "11":"o", "01":"s", "10":"s"}
-# small horizontal jitter so (00,11) and (01,10) don't sit on top of each other
 jitter = {"00": -0.035, "11": +0.035, "01": -0.035, "10": +0.035}
 
 for outcome in ["00", "01", "10", "11"]:
