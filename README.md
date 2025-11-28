@@ -11,6 +11,12 @@ This project creates and analyzes Bell states with phase encoding using Qiskit. 
 - Runs on both Qiskit simulator
 - Estimates phase from measurement probabilities
 
+## Data
+
+The data is stored in the /results folder as /processed and /raw.
+
+
+
 ## How to run
 
 ### Installation
@@ -29,11 +35,6 @@ python -m experiments/run_x_basis_simulator
 **Simulator (Z-basis):**
 ```bash
 python -m experiments/run_z_basis_simulator
-```
-
-**Hardware (requires IBM Quantum account):**
-```bash
-python -m experiments/run_x_basis_hardware
 ```
 
 **Phase estimation analysis:**
