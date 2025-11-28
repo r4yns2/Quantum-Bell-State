@@ -15,6 +15,8 @@ This project creates and analyzes Bell states with phase encoding using Qiskit. 
 
 The data is stored in the /results folder as /processed and /raw.
 
+The plots and histograms are stored in /results/figures when script is ran.
+There is one exception for the composer script which plots the figure directly in the root folder.
 
 
 ## How to run
